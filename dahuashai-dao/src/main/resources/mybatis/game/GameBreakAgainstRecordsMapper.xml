@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.artqiyi.dahuashai.game.mapper.GameBreakAgainstRecordsMapper">
+  <resultMap id="BaseResultMap" type="com.artqiyi.dahuashai.game.domain.GameBreakAgainstRecords">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="game_model_id" jdbcType="BIGINT" property="gameModelId" />
+    <result column="game_model_key" jdbcType="VARCHAR" property="gameModelKey" />
+    <result column="game_no" jdbcType="VARCHAR" property="gameNo" />
+    <result column="game_round" jdbcType="SMALLINT" property="gameRound" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="head_url" jdbcType="VARCHAR" property="headUrl" />
+    <result column="is_win" jdbcType="BIT" property="isWin" />
+    <result column="is_game_end" jdbcType="BIT" property="isGameEnd" />
+    <result column="against_user_id" jdbcType="BIGINT" property="againstUserId" />
+    <result column="against_nick_name" jdbcType="VARCHAR" property="againstNickName" />
+    <result column="against_head_url" jdbcType="VARCHAR" property="againstHeadUrl" />
+    <result column="against_score" jdbcType="INTEGER" property="againstScore" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, game_model_id, game_model_key, game_no, game_round, score, user_id, nick_name, 
+    head_url, is_win, is_game_end, against_user_id, against_nick_name, against_head_url, 
+    against_score, create_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.artqiyi.dahuashai.game.domain.GameBreakAgainstRecordsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from game_break_against_records
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from game_break_against_records
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from game_break_against_records
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.artqiyi.dahuashai.game.domain.GameBreakAgainstRecordsExample">
+    delete from game_break_against_records
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.artqiyi.dahuashai.game.domain.GameBreakAgainstRecords">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into game_break_against_records (game_model_id, game_model_key, game_no, 
+      game_round, score, user_id, 
+      nick_name, head_url, is_win, 
+      is_game_end, against_user_id, against_nick_name, 
+      against_head_url, against_score, create_time, 
+      update_time)
+    values (#{gameModelId,jdbcType=BIGINT}, #{gameModelKey,jdbcType=VARCHAR}, #{gameNo,jdbcType=VARCHAR}, 
+      #{gameRound,jdbcType=SMALLINT}, #{score,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, 
+      #{nickName,jdbcType=VARCHAR}, #{headUrl,jdbcType=VARCHAR}, #{isWin,jdbcType=BIT}, 
+      #{isGameEnd,jdbcType=BIT}, #{againstUserId,jdbcType=BIGINT}, #{againstNickName,jdbcType=VARCHAR}, 
+      #{againstHeadUrl,jdbcType=VARCHAR}, #{againstScore,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.artqiyi.dahuashai.game.domain.GameBreakAgainstRecords">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into game_break_against_records
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gameModelId != null">
+        game_model_id,
+      </if>
+      <if test="gameModelKey != null">
+        game_model_key,
+      </if>
+      <if test="gameNo != null">
+        game_no,
+      </if>
+      <if test="gameRound != null">
+        game_round,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="headUrl != null">
+        head_url,
+      </if>
+      <if test="isWin != null">
+        is_win,
+      </if>
+      <if test="isGameEnd != null">
+        is_game_end,
+      </if>
+      <if test="againstUserId != null">
+        against_user_id,
+      </if>
+      <if test="againstNickName != null">
+        against_nick_name,
+      </if>
+      <if test="againstHeadUrl != null">
+        against_head_url,
+      </if>
+      <if test="againstScore != null">
+        against_score,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gameModelId != null">
+        #{gameModelId,jdbcType=BIGINT},
+      </if>
+      <if test="gameModelKey != null">
+        #{gameModelKey,jdbcType=VARCHAR},
+      </if>
+      <if test="gameNo != null">
+        #{gameNo,jdbcType=VARCHAR},
+      </if>
+      <if test="gameRound != null">
+        #{gameRound,jdbcType=SMALLINT},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="headUrl != null">
+        #{headUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isWin != null">
+        #{isWin,jdbcType=BIT},
+      </if>
+      <if test="isGameEnd != null">
+        #{isGameEnd,jdbcType=BIT},
+      </if>
+      <if test="againstUserId != null">
+        #{againstUserId,jdbcType=BIGINT},
+      </if>
+      <if test="againstNickName != null">
+        #{againstNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="againstHeadUrl != null">
+        #{againstHeadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="againstScore != null">
+        #{againstScore,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.artqiyi.dahuashai.game.domain.GameBreakAgainstRecordsExample" resultType="java.lang.Long">
+    select count(*) from game_break_against_records
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update game_break_against_records
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.gameModelId != null">
+        game_model_id = #{record.gameModelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.gameModelKey != null">
+        game_model_key = #{record.gameModelKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gameNo != null">
+        game_no = #{record.gameNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gameRound != null">
+        game_round = #{record.gameRound,jdbcType=SMALLINT},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.nickName != null">
+        nick_name = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headUrl != null">
+        head_url = #{record.headUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isWin != null">
+        is_win = #{record.isWin,jdbcType=BIT},
+      </if>
+      <if test="record.isGameEnd != null">
+        is_game_end = #{record.isGameEnd,jdbcType=BIT},
+      </if>
+      <if test="record.againstUserId != null">
+        against_user_id = #{record.againstUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.againstNickName != null">
+        against_nick_name = #{record.againstNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.againstHeadUrl != null">
+        against_head_url = #{record.againstHeadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.againstScore != null">
+        against_score = #{record.againstScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update game_break_against_records
+    set id = #{record.id,jdbcType=BIGINT},
+      game_model_id = #{record.gameModelId,jdbcType=BIGINT},
+      game_model_key = #{record.gameModelKey,jdbcType=VARCHAR},
+      game_no = #{record.gameNo,jdbcType=VARCHAR},
+      game_round = #{record.gameRound,jdbcType=SMALLINT},
+      score = #{record.score,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      nick_name = #{record.nickName,jdbcType=VARCHAR},
+      head_url = #{record.headUrl,jdbcType=VARCHAR},
+      is_win = #{record.isWin,jdbcType=BIT},
+      is_game_end = #{record.isGameEnd,jdbcType=BIT},
+      against_user_id = #{record.againstUserId,jdbcType=BIGINT},
+      against_nick_name = #{record.againstNickName,jdbcType=VARCHAR},
+      against_head_url = #{record.againstHeadUrl,jdbcType=VARCHAR},
+      against_score = #{record.againstScore,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.artqiyi.dahuashai.game.domain.GameBreakAgainstRecords">
+    update game_break_against_records
+    <set>
+      <if test="gameModelId != null">
+        game_model_id = #{gameModelId,jdbcType=BIGINT},
+      </if>
+      <if test="gameModelKey != null">
+        game_model_key = #{gameModelKey,jdbcType=VARCHAR},
+      </if>
+      <if test="gameNo != null">
+        game_no = #{gameNo,jdbcType=VARCHAR},
+      </if>
+      <if test="gameRound != null">
+        game_round = #{gameRound,jdbcType=SMALLINT},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="headUrl != null">
+        head_url = #{headUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isWin != null">
+        is_win = #{isWin,jdbcType=BIT},
+      </if>
+      <if test="isGameEnd != null">
+        is_game_end = #{isGameEnd,jdbcType=BIT},
+      </if>
+      <if test="againstUserId != null">
+        against_user_id = #{againstUserId,jdbcType=BIGINT},
+      </if>
+      <if test="againstNickName != null">
+        against_nick_name = #{againstNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="againstHeadUrl != null">
+        against_head_url = #{againstHeadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="againstScore != null">
+        against_score = #{againstScore,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.artqiyi.dahuashai.game.domain.GameBreakAgainstRecords">
+    update game_break_against_records
+    set game_model_id = #{gameModelId,jdbcType=BIGINT},
+      game_model_key = #{gameModelKey,jdbcType=VARCHAR},
+      game_no = #{gameNo,jdbcType=VARCHAR},
+      game_round = #{gameRound,jdbcType=SMALLINT},
+      score = #{score,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=BIGINT},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      head_url = #{headUrl,jdbcType=VARCHAR},
+      is_win = #{isWin,jdbcType=BIT},
+      is_game_end = #{isGameEnd,jdbcType=BIT},
+      against_user_id = #{againstUserId,jdbcType=BIGINT},
+      against_nick_name = #{againstNickName,jdbcType=VARCHAR},
+      against_head_url = #{againstHeadUrl,jdbcType=VARCHAR},
+      against_score = #{againstScore,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

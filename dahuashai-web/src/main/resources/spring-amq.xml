@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+           http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.1.xsd  ">
+
+	<!-- Spring自动将该包目录下标记为@Service的所有类作为spring的Bean -->
+	<!--<context:component-scan base-package="com.artqiyi.dahuashai" />-->
+
+    <bean id="amqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">  
+        <property name="brokerURL" value="tcp://127.0.0.1:61616" />  
+        <!--  
+        <property name="userName" value="admin"></property>  
+        <property name="password" value="admin"></property>
+        -->  
+        <property name="useAsyncSend" value="true" />  
+    </bean>  
+    
+
+     <!-- ActiveMQ为我们提供了一个PooledConnectionFactory，通过往里面注入一个ActiveMQConnectionFactory   
+        可以用来将Connection、Session和MessageProducer池化，这样可以大大的减少我们的资源消耗,要依赖于 activemq-pool包 -->  
+    <bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">  
+        <property name="connectionFactory" ref="amqConnectionFactory" />  
+        <property name="maxConnections" value="100" />  
+    </bean>  
+
+    <!--使用缓存可以提升效率,Spring用于管理真正的ConnectionFactory的ConnectionFactory -->
+    <bean id="cachingConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="targetConnectionFactory" ref="pooledConnectionFactory"/>
+        <property name="sessionCacheSize" value="1"/>
+    </bean>
+
+    <!-- spring 使用jmsTemplate来实现消息的发送和接受 -->  
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="cachingConnectionFactory"/>
+        <property name="messageConverter">
+            <bean class="org.springframework.jms.support.converter.SimpleMessageConverter"/>
+        </property>
+        
+        <!-- 开启订阅模式 -->  
+        <property name="pubSubDomain" value="false" />
+
+        <!--  
+        <property name="sessionAcknowledgeMode" value="1" />
+        -->
+        <!-- deliveryMode, priority, timeToLive 的开关，要生效，必须配置explicitQosEnabled为true，默认false-->  
+        <property name="explicitQosEnabled" value="true" />  
+        
+        <!-- 发送模式  DeliveryMode.NON_PERSISTENT=1:非持久 ; DeliveryMode.PERSISTENT=2:持久-->
+        <property name="deliveryMode" value="2" />  
+        
+    </bean>
+
+    <!--队列的名字是task-reward-queue-->
+    <bean id="destinationQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <!--<constructor-arg index="0" value="spring-queue"/>-->
+        <constructor-arg name="name" value="task-reward-queue"/>
+    </bean>
+
+    <!--Topic
+    <bean id="destinationTopic" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg index="0" value="spring-topic"/>
+    </bean>
+    -->
+</beans>

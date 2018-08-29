@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.artqiyi.dahuashai.user.mapper.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.artqiyi.dahuashai.user.domain.UserInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="user_random_no" jdbcType="INTEGER" property="userRandomNo" />
+    <result column="head_pic_url" jdbcType="VARCHAR" property="headPicUrl" />
+    <result column="gender" jdbcType="SMALLINT" property="gender" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="province_code" jdbcType="VARCHAR" property="provinceCode" />
+    <result column="city_code" jdbcType="VARCHAR" property="cityCode" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="invaite_code" jdbcType="VARCHAR" property="invaiteCode" />
+    <result column="level" jdbcType="VARCHAR" property="level" />
+    <result column="diamond" jdbcType="INTEGER" property="diamond" />
+    <result column="coin" jdbcType="INTEGER" property="coin" />
+    <result column="point" jdbcType="INTEGER" property="point" />
+    <result column="balance" jdbcType="BIGINT" property="balance" />
+    <result column="balance_withdrawable" jdbcType="BIGINT" property="balanceWithdrawable" />
+    <result column="balance_freezed" jdbcType="BIGINT" property="balanceFreezed" />
+    <result column="alipay_account" jdbcType="VARCHAR" property="alipayAccount" />
+    <result column="alipay_realname" jdbcType="VARCHAR" property="alipayRealname" />
+    <result column="phone_validated" jdbcType="BIT" property="phoneValidated" />
+    <result column="realname_validated" jdbcType="BIT" property="realnameValidated" />
+    <result column="alipay_account_validated" jdbcType="BIT" property="alipayAccountValidated" />
+    <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, user_random_no, head_pic_url, gender, birthday, province_code, city_code, 
+    area_code, invaite_code, level, diamond, coin, point, balance, balance_withdrawable, 
+    balance_freezed, alipay_account, alipay_realname, phone_validated, realname_validated, 
+    alipay_account_validated, last_login_time, create_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.artqiyi.dahuashai.user.domain.UserInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.artqiyi.dahuashai.user.domain.UserInfoExample">
+    delete from user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.artqiyi.dahuashai.user.domain.UserInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_info (user_id, user_random_no, head_pic_url, 
+      gender, birthday, province_code, 
+      city_code, area_code, invaite_code, 
+      level, diamond, coin, 
+      point, balance, balance_withdrawable, 
+      balance_freezed, alipay_account, alipay_realname, 
+      phone_validated, realname_validated, alipay_account_validated, 
+      last_login_time, create_time, update_time
+      )
+    values (#{userId,jdbcType=BIGINT}, #{userRandomNo,jdbcType=INTEGER}, #{headPicUrl,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=SMALLINT}, #{birthday,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR}, 
+      #{cityCode,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, #{invaiteCode,jdbcType=VARCHAR}, 
+      #{level,jdbcType=VARCHAR}, #{diamond,jdbcType=INTEGER}, #{coin,jdbcType=INTEGER}, 
+      #{point,jdbcType=INTEGER}, #{balance,jdbcType=BIGINT}, #{balanceWithdrawable,jdbcType=BIGINT}, 
+      #{balanceFreezed,jdbcType=BIGINT}, #{alipayAccount,jdbcType=VARCHAR}, #{alipayRealname,jdbcType=VARCHAR}, 
+      #{phoneValidated,jdbcType=BIT}, #{realnameValidated,jdbcType=BIT}, #{alipayAccountValidated,jdbcType=BIT}, 
+      #{lastLoginTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.artqiyi.dahuashai.user.domain.UserInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userRandomNo != null">
+        user_random_no,
+      </if>
+      <if test="headPicUrl != null">
+        head_pic_url,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="provinceCode != null">
+        province_code,
+      </if>
+      <if test="cityCode != null">
+        city_code,
+      </if>
+      <if test="areaCode != null">
+        area_code,
+      </if>
+      <if test="invaiteCode != null">
+        invaite_code,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="diamond != null">
+        diamond,
+      </if>
+      <if test="coin != null">
+        coin,
+      </if>
+      <if test="point != null">
+        point,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+      <if test="balanceWithdrawable != null">
+        balance_withdrawable,
+      </if>
+      <if test="balanceFreezed != null">
+        balance_freezed,
+      </if>
+      <if test="alipayAccount != null">
+        alipay_account,
+      </if>
+      <if test="alipayRealname != null">
+        alipay_realname,
+      </if>
+      <if test="phoneValidated != null">
+        phone_validated,
+      </if>
+      <if test="realnameValidated != null">
+        realname_validated,
+      </if>
+      <if test="alipayAccountValidated != null">
+        alipay_account_validated,
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userRandomNo != null">
+        #{userRandomNo,jdbcType=INTEGER},
+      </if>
+      <if test="headPicUrl != null">
+        #{headPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=SMALLINT},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null">
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invaiteCode != null">
+        #{invaiteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="diamond != null">
+        #{diamond,jdbcType=INTEGER},
+      </if>
+      <if test="coin != null">
+        #{coin,jdbcType=INTEGER},
+      </if>
+      <if test="point != null">
+        #{point,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=BIGINT},
+      </if>
+      <if test="balanceWithdrawable != null">
+        #{balanceWithdrawable,jdbcType=BIGINT},
+      </if>
+      <if test="balanceFreezed != null">
+        #{balanceFreezed,jdbcType=BIGINT},
+      </if>
+      <if test="alipayAccount != null">
+        #{alipayAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayRealname != null">
+        #{alipayRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneValidated != null">
+        #{phoneValidated,jdbcType=BIT},
+      </if>
+      <if test="realnameValidated != null">
+        #{realnameValidated,jdbcType=BIT},
+      </if>
+      <if test="alipayAccountValidated != null">
+        #{alipayAccountValidated,jdbcType=BIT},
+      </if>
+      <if test="lastLoginTime != null">
+        #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.artqiyi.dahuashai.user.domain.UserInfoExample" resultType="java.lang.Long">
+    select count(*) from user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userRandomNo != null">
+        user_random_no = #{record.userRandomNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.headPicUrl != null">
+        head_pic_url = #{record.headPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=SMALLINT},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provinceCode != null">
+        province_code = #{record.provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityCode != null">
+        city_code = #{record.cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaCode != null">
+        area_code = #{record.areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invaiteCode != null">
+        invaite_code = #{record.invaiteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null">
+        level = #{record.level,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diamond != null">
+        diamond = #{record.diamond,jdbcType=INTEGER},
+      </if>
+      <if test="record.coin != null">
+        coin = #{record.coin,jdbcType=INTEGER},
+      </if>
+      <if test="record.point != null">
+        point = #{record.point,jdbcType=INTEGER},
+      </if>
+      <if test="record.balance != null">
+        balance = #{record.balance,jdbcType=BIGINT},
+      </if>
+      <if test="record.balanceWithdrawable != null">
+        balance_withdrawable = #{record.balanceWithdrawable,jdbcType=BIGINT},
+      </if>
+      <if test="record.balanceFreezed != null">
+        balance_freezed = #{record.balanceFreezed,jdbcType=BIGINT},
+      </if>
+      <if test="record.alipayAccount != null">
+        alipay_account = #{record.alipayAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alipayRealname != null">
+        alipay_realname = #{record.alipayRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneValidated != null">
+        phone_validated = #{record.phoneValidated,jdbcType=BIT},
+      </if>
+      <if test="record.realnameValidated != null">
+        realname_validated = #{record.realnameValidated,jdbcType=BIT},
+      </if>
+      <if test="record.alipayAccountValidated != null">
+        alipay_account_validated = #{record.alipayAccountValidated,jdbcType=BIT},
+      </if>
+      <if test="record.lastLoginTime != null">
+        last_login_time = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_info
+    set id = #{record.id,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      user_random_no = #{record.userRandomNo,jdbcType=INTEGER},
+      head_pic_url = #{record.headPicUrl,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=SMALLINT},
+      birthday = #{record.birthday,jdbcType=VARCHAR},
+      province_code = #{record.provinceCode,jdbcType=VARCHAR},
+      city_code = #{record.cityCode,jdbcType=VARCHAR},
+      area_code = #{record.areaCode,jdbcType=VARCHAR},
+      invaite_code = #{record.invaiteCode,jdbcType=VARCHAR},
+      level = #{record.level,jdbcType=VARCHAR},
+      diamond = #{record.diamond,jdbcType=INTEGER},
+      coin = #{record.coin,jdbcType=INTEGER},
+      point = #{record.point,jdbcType=INTEGER},
+      balance = #{record.balance,jdbcType=BIGINT},
+      balance_withdrawable = #{record.balanceWithdrawable,jdbcType=BIGINT},
+      balance_freezed = #{record.balanceFreezed,jdbcType=BIGINT},
+      alipay_account = #{record.alipayAccount,jdbcType=VARCHAR},
+      alipay_realname = #{record.alipayRealname,jdbcType=VARCHAR},
+      phone_validated = #{record.phoneValidated,jdbcType=BIT},
+      realname_validated = #{record.realnameValidated,jdbcType=BIT},
+      alipay_account_validated = #{record.alipayAccountValidated,jdbcType=BIT},
+      last_login_time = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.artqiyi.dahuashai.user.domain.UserInfo">
+    update user_info
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userRandomNo != null">
+        user_random_no = #{userRandomNo,jdbcType=INTEGER},
+      </if>
+      <if test="headPicUrl != null">
+        head_pic_url = #{headPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=SMALLINT},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null">
+        province_code = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invaiteCode != null">
+        invaite_code = #{invaiteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="diamond != null">
+        diamond = #{diamond,jdbcType=INTEGER},
+      </if>
+      <if test="coin != null">
+        coin = #{coin,jdbcType=INTEGER},
+      </if>
+      <if test="point != null">
+        point = #{point,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=BIGINT},
+      </if>
+      <if test="balanceWithdrawable != null">
+        balance_withdrawable = #{balanceWithdrawable,jdbcType=BIGINT},
+      </if>
+      <if test="balanceFreezed != null">
+        balance_freezed = #{balanceFreezed,jdbcType=BIGINT},
+      </if>
+      <if test="alipayAccount != null">
+        alipay_account = #{alipayAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayRealname != null">
+        alipay_realname = #{alipayRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneValidated != null">
+        phone_validated = #{phoneValidated,jdbcType=BIT},
+      </if>
+      <if test="realnameValidated != null">
+        realname_validated = #{realnameValidated,jdbcType=BIT},
+      </if>
+      <if test="alipayAccountValidated != null">
+        alipay_account_validated = #{alipayAccountValidated,jdbcType=BIT},
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.artqiyi.dahuashai.user.domain.UserInfo">
+    update user_info
+    set user_id = #{userId,jdbcType=BIGINT},
+      user_random_no = #{userRandomNo,jdbcType=INTEGER},
+      head_pic_url = #{headPicUrl,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=SMALLINT},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      province_code = #{provinceCode,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+      invaite_code = #{invaiteCode,jdbcType=VARCHAR},
+      level = #{level,jdbcType=VARCHAR},
+      diamond = #{diamond,jdbcType=INTEGER},
+      coin = #{coin,jdbcType=INTEGER},
+      point = #{point,jdbcType=INTEGER},
+      balance = #{balance,jdbcType=BIGINT},
+      balance_withdrawable = #{balanceWithdrawable,jdbcType=BIGINT},
+      balance_freezed = #{balanceFreezed,jdbcType=BIGINT},
+      alipay_account = #{alipayAccount,jdbcType=VARCHAR},
+      alipay_realname = #{alipayRealname,jdbcType=VARCHAR},
+      phone_validated = #{phoneValidated,jdbcType=BIT},
+      realname_validated = #{realnameValidated,jdbcType=BIT},
+      alipay_account_validated = #{alipayAccountValidated,jdbcType=BIT},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

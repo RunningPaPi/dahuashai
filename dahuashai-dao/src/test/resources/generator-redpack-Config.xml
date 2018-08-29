@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+	<context id="entmobile" targetRuntime="MyBatis3">
+
+		<plugin
+			type="org.mybatis.generator.plugins.AddLimitOffsetPlugin" />
+
+		<commentGenerator>
+			<property name="suppressDate" value="true" />
+			<!-- remove comments -->
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+		<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+		<!-- jdbc connection -->
+		<!-- data -->
+
+        <!--  
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/dahuashai?useUnicode=true&amp;characterEncoding=UTF-8"
+			userId="root" password="123456" />
+        -->
+        
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://106.75.173.117:13306/dahuashai?useUnicode=true&amp;characterEncoding=UTF-8"
+			userId="root" password="k8U@*hy4icomxz" />
+
+
+		<!-- java type resolver -->
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- gen entity -->
+		<!--data -->
+		<javaModelGenerator
+			targetPackage="com.artqiyi.dahuashai.redpack.domain"
+			targetProject="./src/main/java">
+			<property name="enableSubPackages" value="false" />
+			<property name="trimStrings" value="false" />
+		</javaModelGenerator>
+
+		<!-- gen annotated mapper -->
+		<!-- data -->
+		<javaClientGenerator type="ANNOTATEDMAPPER"
+			targetPackage="com.artqiyi.dahuashai.redpack.mapper"
+			targetProject="./src/main/java">
+			<property name="enableSubPackages" value="false" />
+		</javaClientGenerator>
+
+		<!---->
+
+		<table tableName="redpack_group_task">
+			<generatedKey column="group_task_id" sqlStatement="JDBC"
+				identity="true" />
+		</table>
+		
+		<table tableName="redpack_group_task_log">
+			<generatedKey column="group_task_log_id" sqlStatement="JDBC"
+				identity="true" />
+		</table>		
+
+		<table tableName="redpack_task">
+			<generatedKey column="task_id" sqlStatement="JDBC"
+				identity="true" />
+		</table>
+		
+		<table tableName="redpack_task_log">
+			<generatedKey column="task_log_id" sqlStatement="JDBC"
+				identity="true" />
+		</table>	
+
+		<table tableName="redpack_withdraw_application">
+			<generatedKey column="application_id" sqlStatement="JDBC"
+				identity="true" />
+		</table>	
+
+	</context>
+</generatorConfiguration>

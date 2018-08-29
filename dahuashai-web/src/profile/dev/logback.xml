@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds"
+	packagingData="true" debug="false">
+	<!-- 定义日志的根目录 -->
+	<property name="LOG_HOME"
+		value="/work/logs/devdhs.artqiyi.com" />
+
+	<!-- 定义日志文件名称 -->
+	<property name="LOG_NAME" value="dahuashai"></property>
+
+	<!-- 支付模块日志文件名称 -->
+	<property name="LOG_NAME_PAYMENT" value="payment"></property>
+
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level
+				%logger{100} [%file:%line] - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE_OUT"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/${LOG_NAME}.log</file>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>
+				%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level
+				%logger{100} [%file:%line] - %msg%n
+			</pattern>
+		</encoder>
+
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>
+				${LOG_HOME}/${LOG_NAME}-%d{yyyy-MM-dd}-%i.log
+			</fileNamePattern>
+			<maxHistory>10</maxHistory>
+			<cleanHistoryOnStart>true</cleanHistoryOnStart>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>200MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="FILE_OUT_PAYMENT"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/${LOG_NAME_PAYMENT}.log</file>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>
+				%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level
+				%logger{100} [%file:%line] - %msg%n
+			</pattern>
+		</encoder>
+
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>
+				${LOG_HOME}/${LOG_NAME_PAYMENT}-%d{yyyy-MM-dd}-%i.log
+			</fileNamePattern>
+			<maxHistory>10</maxHistory>
+			<cleanHistoryOnStart>true</cleanHistoryOnStart>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>200MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="ASYNC"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+		<discardingThreshold>0</discardingThreshold>
+		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+		<queueSize>512</queueSize>
+		<!-- 添加附加的appender,最多只能添加一个 -->
+		<appender-ref ref="FILE_OUT" />
+	</appender>
+
+	<logger name="ASYNC_LOGGER" level="DEBUG" additivity="false">
+		<appender-ref ref="ASYNC" />
+	</logger>
+
+	<logger name="org.springframework" level="WARN" />
+	<logger name="org.apache.ibatis" level="ERROR" />
+    <logger name="org.apache.http" level="ERROR" />
+	<logger name="com.mchange.v2" level="ERROR" />
+	<logger name="org.mybatis" level="WARN" />
+	<logger name="ch.qos" level="WARN" />
+	<logger name="org.quartz" level="WARN" />
+	<logger name="weixin.popular" level="WARN" />
+
+
+	<logger name="com.artqiyi.dahuashai.payment" level="INFO"
+		additivity="false">
+		<appender-ref ref="FILE_OUT_PAYMENT" />
+	</logger>
+
+	<logger name="weixin.popular" level="INFO"
+		additivity="false">
+		<appender-ref ref="FILE_OUT_PAYMENT" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE_OUT" />
+	</root>
+</configuration>

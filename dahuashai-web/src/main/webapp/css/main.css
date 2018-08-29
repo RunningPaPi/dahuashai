@@ -1,0 +1,235 @@
+.wrapper{
+    padding-top: 20px;
+    background-color: #f6f6f6;
+}
+/*Top start*/
+.wrap_top{
+	width: 100%;
+    border-bottom: 1px solid #3888ed;
+    background: #096ceb;
+}
+.topCon{
+	width: 1200px;
+    margin: 0 auto;
+    font-size: 14px;
+    overflow: hidden;
+}
+.logo {
+    float: left;
+    padding: 8px 0;
+}
+.logo img{
+    width: 244px;
+    height: 44px;
+    display: block;
+}
+/*Top end*/
+
+/* Bar start */
+
+.barCon {
+    width: 1200px;
+    background: #FFFFFF;
+    display: block;
+    overflow: hidden;
+    margin: 15px auto;
+}
+.inquire{
+	    margin: 20px;
+	}
+	/*顶部通栏按钮*/
+	.starTime{
+		width: 80px;
+		padding-right: 20px;
+	}
+	.stDate{
+	    width: 350px;
+	}
+	.stDate input{
+		width: 120px;
+    	margin-right: 5px;
+	}
+	.djxh{
+		width: 100px;
+	    padding-right: 20px;
+	}
+	.djxhInput{
+		width: 120px;
+    	padding-right: 20px;
+	}
+	.djxhInput input{
+		width: 200px;
+	}
+	.search{
+		width: 120px;
+	    padding-right: 20px;
+	}
+/* Bar end */
+
+/* Con start*/
+	.boxCon{
+		margin: 0 auto;
+	    width: 1200px;
+	    display: block;
+    	overflow: hidden;
+	}
+    /*图的样式*/
+	#mainDiv {
+	    width: 1200px;
+	    margin: 0 auto;
+	    overflow: hidden;
+        background-color: #f6f6f6;
+    }
+
+    /* ��� */
+    .leftCon{
+    	width: 900px;
+	    float: left;
+	    background: #fff;
+    }
+    .box1{
+    	overflow:hidden;
+    }
+    .industryRanking{
+     	width: 442px;
+     	height:450px;
+	    border: 1px solid #e5e5e5;
+	    margin-bottom: 10px;
+	    background: #fff;
+	    float: left;
+    }
+    #industryRanking{
+   	    margin-top: 10px;
+	  	width: 442px;
+  	    height: 396px;
+    }
+    .topTitle{
+		height: 38px;
+	    line-height: 38px;
+	    border-bottom: 1px solid #e5e5e5;
+	}
+	
+	.topTitle img.icon{
+		width: 23px;
+	    height: 23px;
+	    display: inline-block;
+	    margin-left: -281px;
+	    margin-right: 12px;
+	}
+	.topTitle img.iconother{
+		width: 23px;
+	    height: 23px;
+	    display: inline-block;
+	    margin-left: -725px;
+	    margin-right: 12px;
+	}
+	.topTitle span{
+		color: #2293d1;
+	}
+	.graphCon{
+	
+	}
+    .payTaxesHistory{
+    	width: 442px;
+     	height:450px;
+    	border: 1px solid #e5e5e5;
+	    margin-bottom: 10px;
+	    background: #fff;
+	    float: right;
+    }
+    #payTaxesHistory{
+   	    margin-top: 10px;
+	  	width: 442px;
+  	    height: 396px;
+    }
+    .chord{
+    	width: 898px;
+	    border: 1px solid #e5e5e5;
+	    margin-bottom: 10px;
+	    height: 450px;
+    	float: left;
+    }
+    #chord{
+   	    margin-top: 10px;
+	  	width: 898px;
+  	    height: 396px;
+    }
+    .payTaxesTrend{
+    	width: 898px;
+	    border: 1px solid #e5e5e5;
+	    margin-bottom: 10px;
+	    height: 450px;
+    	float: left;
+    }
+    #payTaxesTrend{
+   	    margin-top: 10px;
+	  	width: 898px;
+  	    height: 396px;
+    }
+    .illegal{
+    	width: 898px;
+	    border: 1px solid #e5e5e5;
+	    margin-bottom: 10px;
+	    height: 450px;
+    	float: left;
+    }
+    #illegal{
+   	    margin-top: 10px;
+	  	width: 898px;
+  	    height: 396px;
+    }
+    /* �Ҳ� */
+    .rightCon{
+		width: 280px;
+	    float: right;
+	    /*height: 500px;
+	    background-color: blue;*/
+	}
+	.r_box1{
+		background: #fff;
+	    margin-bottom: 20px;
+	    border: 1px solid #e5e5e5;
+	}
+	.tzgx{
+		line-height: 60px;
+	    height: 60px;
+	    border-bottom: 1px solid #e5e5e5;
+	    box-sizing: border-box;
+	    padding-left: 20px;
+	}
+	.tzgxImg{
+		padding: 20px 30px;
+	}
+	.tzgxImg img{
+	
+	}
+	a.more {
+	    width: 124px;
+	    height: 30px;
+	    line-height: 30px;
+	    border: 1px solid #47aaf9;
+	    border-radius: 4px;
+	    color: #47aaf9;
+	    text-decoration: none;
+	    display: block;
+	    margin-left: auto;
+	    margin-right: auto;
+	    text-align: center;
+	    margin-bottom: 17px;
+	}
+	.r_box2{
+		background: #fff;
+	    margin-bottom: 20px;
+	    border: 1px solid #e5e5e5;
+	}
+	.zfgx{
+		line-height: 60px;
+	    height: 60px;
+	    border-bottom: 1px solid #e5e5e5;
+	    box-sizing: border-box;
+	    padding-left: 20px;
+	}
+	.zfgxImg{
+		padding: 20px 30px;
+	}
+/* Con end*/

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.artqiyi.dahuashai.game.mapper.GameBreakRecoverCostMapper">
+  <resultMap id="BaseResultMap" type="com.artqiyi.dahuashai.game.domain.GameBreakRecoverCost">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="game_model_id" jdbcType="BIGINT" property="gameModelId" />
+    <result column="game_model_key" jdbcType="VARCHAR" property="gameModelKey" />
+    <result column="game_round" jdbcType="INTEGER" property="gameRound" />
+    <result column="cost_type" jdbcType="SMALLINT" property="costType" />
+    <result column="cost_num" jdbcType="INTEGER" property="costNum" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_id" jdbcType="BIGINT" property="createId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, game_model_id, game_model_key, game_round, cost_type, cost_num, create_time, 
+    create_id
+  </sql>
+  <select id="selectByExample" parameterType="com.artqiyi.dahuashai.game.domain.GameBreakRecoverCostExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from game_break_recover_cost
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from game_break_recover_cost
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from game_break_recover_cost
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.artqiyi.dahuashai.game.domain.GameBreakRecoverCostExample">
+    delete from game_break_recover_cost
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.artqiyi.dahuashai.game.domain.GameBreakRecoverCost">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into game_break_recover_cost (game_model_id, game_model_key, game_round, 
+      cost_type, cost_num, create_time, 
+      create_id)
+    values (#{gameModelId,jdbcType=BIGINT}, #{gameModelKey,jdbcType=VARCHAR}, #{gameRound,jdbcType=INTEGER}, 
+      #{costType,jdbcType=SMALLINT}, #{costNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.artqiyi.dahuashai.game.domain.GameBreakRecoverCost">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into game_break_recover_cost
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gameModelId != null">
+        game_model_id,
+      </if>
+      <if test="gameModelKey != null">
+        game_model_key,
+      </if>
+      <if test="gameRound != null">
+        game_round,
+      </if>
+      <if test="costType != null">
+        cost_type,
+      </if>
+      <if test="costNum != null">
+        cost_num,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gameModelId != null">
+        #{gameModelId,jdbcType=BIGINT},
+      </if>
+      <if test="gameModelKey != null">
+        #{gameModelKey,jdbcType=VARCHAR},
+      </if>
+      <if test="gameRound != null">
+        #{gameRound,jdbcType=INTEGER},
+      </if>
+      <if test="costType != null">
+        #{costType,jdbcType=SMALLINT},
+      </if>
+      <if test="costNum != null">
+        #{costNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.artqiyi.dahuashai.game.domain.GameBreakRecoverCostExample" resultType="java.lang.Long">
+    select count(*) from game_break_recover_cost
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update game_break_recover_cost
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.gameModelId != null">
+        game_model_id = #{record.gameModelId,jdbcType=BIGINT},
+      </if>
+      <if test="record.gameModelKey != null">
+        game_model_key = #{record.gameModelKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gameRound != null">
+        game_round = #{record.gameRound,jdbcType=INTEGER},
+      </if>
+      <if test="record.costType != null">
+        cost_type = #{record.costType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.costNum != null">
+        cost_num = #{record.costNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createId != null">
+        create_id = #{record.createId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update game_break_recover_cost
+    set id = #{record.id,jdbcType=BIGINT},
+      game_model_id = #{record.gameModelId,jdbcType=BIGINT},
+      game_model_key = #{record.gameModelKey,jdbcType=VARCHAR},
+      game_round = #{record.gameRound,jdbcType=INTEGER},
+      cost_type = #{record.costType,jdbcType=SMALLINT},
+      cost_num = #{record.costNum,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      create_id = #{record.createId,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.artqiyi.dahuashai.game.domain.GameBreakRecoverCost">
+    update game_break_recover_cost
+    <set>
+      <if test="gameModelId != null">
+        game_model_id = #{gameModelId,jdbcType=BIGINT},
+      </if>
+      <if test="gameModelKey != null">
+        game_model_key = #{gameModelKey,jdbcType=VARCHAR},
+      </if>
+      <if test="gameRound != null">
+        game_round = #{gameRound,jdbcType=INTEGER},
+      </if>
+      <if test="costType != null">
+        cost_type = #{costType,jdbcType=SMALLINT},
+      </if>
+      <if test="costNum != null">
+        cost_num = #{costNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.artqiyi.dahuashai.game.domain.GameBreakRecoverCost">
+    update game_break_recover_cost
+    set game_model_id = #{gameModelId,jdbcType=BIGINT},
+      game_model_key = #{gameModelKey,jdbcType=VARCHAR},
+      game_round = #{gameRound,jdbcType=INTEGER},
+      cost_type = #{costType,jdbcType=SMALLINT},
+      cost_num = #{costNum,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,89 @@
+@charset "utf-8";
+/* CSS Document */
+body{margin: 0px;}
+p, h1, h2, h3, h4, h5, h6 {margin:0;padding:0;}
+ul, li {list-style-type:none;margin: 0px;padding: 0px;}
+div, form, img, ul, ol, li, dl, dt, dd {border:0 none;list-style:none outside none;margin:0;padding:0;}
+.cf {zoom:1;} .cf:after {content:'.';display:block;visibility:hidden;clear:both;height:0px;}
+.back-top img {margin: 10px 0 10px 10px;}
+.back-menu {height: 26px;background-color: #4e7dcc;padding-top: 3px;border-bottom: 10px solid #dbecf8;}
+.back-menu ul{padding-left: 10px;}
+.back-menu li {height: 21px;background-repeat: repeat-x;float: left;font-size:14px;font-weight:bold;width: 134px;text-align: center;padding-top:5px;}
+.back-menu-on{background-image: url(../images/back-menu-libg.gif);}
+.back-menu-on a ,.back-menu-on a:visited,.back-menu-on a:hover {color:#000;text-decoration: none;}
+
+.back-menu li a ,.back-menu li a:visited {color:#fff;text-decoration: none;}
+.back-menu li a:hover {color:#f3faa4;text-decoration: none;}
+.back-leftmenu {padding: 10px 10px 0 10px;}
+.back-leftmenu ul {background-color: #f5f9fc;}
+.back-leftmenu .concen {padding: 10px 0 10px 7px;font-size: 12px;color: #004499;}
+.back-leftmenu .concen p{line-height:0.5;padding-left: 18px;background-image: url(../images/jiantou.gif);background-repeat: no-repeat;background-position: 1px;}
+.back-leftmenu .concen p a ,.back-leftmenu .concen p a:visited {color:#004499;text-decoration: none; }
+.back-leftmenu .concen p a:hover {color:#ff0000;text-decoration: none;}
+.back-concen{margin: 20px;border: 1px solid #bcd2e9;padding: 20px;}
+.back-concen .welcome {text-align: center;font-family: "宋体";font-size: 18px;font-weight: bold;color: #FF0000;}
+.back-concen h1 {font-size: 14px;font-weight: bold;padding-bottom: 10px;border-bottom: 1px solid #bcd2e9;margin-bottom: 10px;}
+.back-concen p {font-size: 12px;}
+.back-concen p input{ margin-right:10px;}
+.back-concen .tab {margin-top: 10px;padding-left: 15px;}
+.back-concen .tab table{border-left: 1px solid #c5c5c5;border-bottom: 1px solid #c5c5c5;}
+.back-concen .tab td{height:25px;line-height:1.8;text-align:center;font-size: 12px;border-top: 1px solid #c5c5c5;border-right: 1px solid #c5c5c5;}
+.back-concen-tab-top{font-size: 14px;font-weight: bold;color: #FFFFFF; background-color: #4e7dcc;}
+
+.tab th{
+	height: 24px;
+	text-align: center;
+	font-size: 12px;
+	font-weight: normal;
+	vertical-align: middle;
+}
+
+.tab th.th-type1 {
+	height: 28px;
+	background-color: #ccc;
+}
+
+.tab th.th-type2 {
+	height: 28px;
+	background-color: #0f0;
+}
+
+.tab th.th-type3 {
+	height: 28px;
+	background-color: #9C3;
+}
+
+.back-accounts .revise {
+	margin-top: 15px;
+	background-color: #dedede;
+	padding: 10px;
+}
+
+.back-accounts .revise .txt {margin-top: 10px;margin-bottom: 10px;}
+.back-accounts .revise .txt h2 {float: left;width: 120px;font-size: 12px;text-align: right;}
+.back-accounts .revise .txt select{ margin:0 10px;}
+.back-concen .breakdown {border: 1px solid #c5c5c5;padding: 10px;}
+.back-concen .breakdown p {margin-bottom: 10px;font-size: 12px;font-weight: bold;}
+.back-concen .breakdown div p {font-weight: normal;float: left;margin-right: 20px;}
+.back-concen .breakdown div input{ float: right; margin:0 10px; }
+.back-concen .breakdown .inquire {margin-top: 0px;border-top:0px #ccc solid;padding-top: 10px;}
+.back-concen .breakdown .inquire td{ height:28px; line-height:1.8; font-size:12px;}
+.back-concen .breakdown .inquire input{ float: none; width:110px; margin:0 10px 0 0}
+/*
+.back-concen .popedom {margin-top: 20px;}
+.back-concen .popedom td{ height:25px; line-height:1.8; font-size:12px;}
+.back-concen .popedom .check {border: 1px solid #ccc;}
+.back-concen .popedom .check h5 {font-weight: normal; border-bottom:1px #ccc solid; font-size:12px;}
+.back-concen .popedom .check p {font-weight: bold; margin-left:10px;}
+.back-concen .popedom .check div {}
+.back-concen .popedom .check .team {margin-left: 20px;}
+.back-concen .popedom .check .team p {font-weight: normal; margin:0}
+*/
+.back-accounts {width: 500px;padding: 10px; border:1px #ccc solid;}
+.back-accounts h1{font-size: 14px;font-weight: bold;text-align: center; border-bottom:1px #ccc solid; padding-bottom:10px;}
+.back-accounts p{padding-top:10px;font-weight: bold;font-size: 12px;}
+.back-accounts ul{ margin-top:10px;}
+.back-accounts li{float: left;width:60px;font-size: 12px; padding-bottom:5px;}
+.back-accounts-on{background-color: #ececec;}
+.back-accounts .txt {background-color: #ececec;padding: 10px;font-size: 12px;}
+.back-accounts .txt input{width: 100px;}

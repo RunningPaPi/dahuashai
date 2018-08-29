@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+           http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.1.xsd  ">
+
+	<!-- 自动扫描注解的bean -->
+	<context:component-scan base-package="com.artqiyi.dahuashai" >  <!--避免加载到controller，进而装配到还没有被代理到的service对象-->
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	<import resource="spring-redis.xml" />
+	<import resource="spring-amq.xml" />
+	<import resource="spring-threadPool.xml" />
+
+	<!--&lt;!&ndash; 01.配置数据源 &ndash;&gt; -->
+	<bean id="dataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driverClass}"></property>
+		<property name="jdbcUrl" value="${jdbc.url}"></property>
+		<property name="user" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+
+		<!-- 初始化连接池中的连接数，取值应在minPoolSize与maxPoolSize之间，默认为3 -->
+		<property name="initialPoolSize" value="20" />
+
+		<!-- 连接池中保留的最小连接数，默认为：3 -->
+		<property name="minPoolSize" value="20" />
+
+		<!-- 连接池中保留的最大连接数。默认值: 15 -->
+		<property name="maxPoolSize" value="200" />
+
+		<!-- 当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
+		<property name="acquireIncrement" value="20" />
+
+		<!-- 最大空闲时间，多少秒内未使用则连接被丢弃。若为0则永不丢弃。默认值: 0 -->
+		<property name="maxIdleTime" value="60" />
+
+		<!-- 每隔多少秒检查所有连接池中的空闲连接 -->
+		<property name="idleConnectionTestPeriod" value="60" />
+
+		<!-- preferredTestQuery -->
+		<property name="preferredTestQuery" value="SELECT 1" />
+
+
+	</bean>
+
+	<!-- 引入jdbc配置文件 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:*.properties</value>
+				<!--要是有多个配置文件，只需在这里继续添加即可 -->
+			</list>
+		</property>
+	</bean>
+
+	<!-- 自动扫描了所有的XxxxMapper.xml对应的mapper接口文件，这样就不用一个一个手动配置Mpper的映射了，只要Mapper接口类和Mapper映射文件对应起来就可以了。 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage"
+			value="com.artqiyi.dahuashai.*.mapper" />
+	</bean>
+
+	<!-- 配置Mybatis的文件 ，mapperLocations配置**Mapper.xml文件位置，configLocation配置mybatis-config文件位置 -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!--<property name="mapperLocations" value="classpath:UserMapper.xml"/> -->
+		<property name="mapperLocations"
+			value="classpath:mybatis/*/*.xml" />
+		<property name="configLocation"
+			value="classpath:mybatis-config.xml" />
+	</bean>
+
+    <!--  
+	<bean id="dahuashaiMapperScannerConfigurer"
+		class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage"
+			value="com.artqiyi.dahuashai.system.mapper,com.artqiyi.dahuashai.system.mapper.ext" />
+		<property name="sqlSessionFactoryBeanName"
+			value="sqlSessionFactory" />
+	</bean>
+    -->
+	<!--&lt;!&ndash; 06.配置事务管理器 &ndash;&gt; -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- 07.配置开启事务操作 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!--指定在连接方法上应用的事务属性 -->
+			<tx:method name="*ForRequiresNew" propagation="REQUIRES_NEW"/>
+			<tx:method name="*ForNotSupported" propagation="NOT_SUPPORTED"/>
+			<tx:method name="page" read-only="true"/>
+			<tx:method name="selectByExample" read-only="true"/>
+			<tx:method name="selectById" read-only="true"/>
+			<tx:method name="countByExample" read-only="true"/>
+			<!--<tx:method name="*" propagation="REQUIRED"/>-->
+		</tx:attributes>
+	</tx:advice>
+	<!-- aop配置 -->
+	<aop:config>
+		<aop:pointcut
+			expression="execution(* *..service.impl.*ServiceImpl.*(..))
+						and execution(* *..service.*Service.*(..))
+						and !execution(* *..websocket..*(..))
+						and !execution(* *..mq..*(..))" id="stockPointcut" />
+		<aop:advisor advice-ref="txAdvice"
+			pointcut-ref="stockPointcut" />
+	</aop:config>
+
+	<!--强制使用cglib代理方式-->
+	<!--<aop:aspectj-autoproxy proxy-target-class="true"/>-->
+	<!--开启事务注解-->
+	<!---->
+
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+	<!-- 任务工厂，注入需注入scheduler -->
+	<bean id="schedulerFactoryBean"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean" />
+	<!-- 注册SpringContextUtil用于获取ApplicationContext -->
+	<bean id="springContextUtil"
+		class="com.artqiyi.dahuashai.util.SpringContextUtil"></bean>
+
+</beans>
+    

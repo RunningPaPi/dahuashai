@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.artqiyi.dahuashai.game.mapper.GameRankMapper">
+
+    <select id="selectLatestRank" resultType="com.artqiyi.dahuashai.game.vo.UserRankVo">
+        select userId, nickName userName, headPicUrl, passTimes,money,rank from(
+        SELECT userId, nickName, headPicUrl, passTimes,money,
+            ( @rowNum := @rowNum + 1 ) AS rank
+        FROM
+        (
+        SELECT
+            q.user_id userId,
+            u.nick_name nickName,
+            ui.head_pic_url headPicUrl,
+            sum( q.pass_times ) AS passTimes,
+            sum( q.pass_times * b.per_award ) money
+        FROM
+            game_break_user_qualify q
+            INNER JOIN `game_break_records` b ON b.game_no = q.game_no
+            INNER JOIN `user` u ON q.user_id = u.id
+            INNER JOIN `user_info` ui ON q.user_id = ui.user_id
+        WHERE
+            q.game_model_id = #{gameId,jdbcType=BIGINT}
+            AND q.create_time BETWEEN #{startTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}
+        GROUP BY
+            q.user_id,headPicUrl
+        ORDER BY
+            passTimes DESC,money DESC
+        ) a,( SELECT ( @rowNum := 0 ) ) b) a
+    </select>
+
+    <select id="selectAllRank" resultType="com.artqiyi.dahuashai.game.vo.UserRankVo">
+        select userId, nickName  userName, headPicUrl, passTimes,money,rank from (
+        SELECT userId, nickName, headPicUrl, passTimes,money,
+            ( @rowNum := @rowNum + 1 ) AS rank
+        FROM
+        (
+        SELECT
+            q.user_id userId,
+            u.nick_name nickName,
+            ui.head_pic_url headPicUrl,
+            sum( q.pass_times ) AS passTimes,
+            sum( q.pass_times * b.per_award ) money
+        FROM
+            game_break_user_qualify q
+            INNER JOIN `game_break_records` b ON b.game_no = q.game_no
+            INNER JOIN `user` u ON q.user_id = u.id
+            INNER JOIN `user_info` ui ON q.user_id = ui.user_id
+        WHERE
+            q.game_model_id = #{gameId,jdbcType=BIGINT}
+        GROUP BY
+            q.user_id,headPicUrl
+        ORDER BY
+            passTimes DESC,money DESC
+        ) a,( SELECT ( @rowNum := 0 ) ) b) a
+    </select>
+
+    <select id="selectUserRankInAll" resultType="com.artqiyi.dahuashai.game.vo.UserRankVo">
+        SELECT
+            userId,nickName  userName, headPicUrl,passTimes,money,rank
+        FROM
+        (
+            SELECT userId, nickName, headPicUrl, passTimes,money,
+                ( @rowNum := @rowNum + 1 ) AS rank
+            FROM
+            (
+            SELECT
+                q.user_id userId,
+                u.nick_name nickName,
+                ui.head_pic_url headPicUrl,
+                sum( q.pass_times ) AS passTimes,
+                sum( q.pass_times * b.per_award ) money
+            FROM
+                game_break_user_qualify q
+                INNER JOIN `game_break_records` b ON b.game_no = q.game_no
+                INNER JOIN `user` u ON q.user_id = u.id
+                INNER JOIN `user_info` ui ON q.user_id = ui.user_id
+            WHERE
+                q.game_model_id = #{gameId,jdbcType=BIGINT}
+            GROUP BY
+                q.user_id,headPicUrl
+            ORDER BY
+                passTimes DESC,money DESC
+            ) a,( SELECT ( @rowNum := 0 ) ) b
+        ) r
+        WHERE
+            userId = #{userId,jdbcType=BIGINT}
+    </select>
+    <select id="selectUserRank" resultType="com.artqiyi.dahuashai.game.vo.UserRankVo">
+        SELECT
+            userId,nickName  userName, headPicUrl,passTimes,money,rank
+        FROM
+        (
+            SELECT userId, nickName, headPicUrl, passTimes,money,
+                ( @rowNum := @rowNum + 1 ) AS rank
+            FROM
+            (
+            SELECT
+                q.user_id userId,
+                u.nick_name nickName,
+                ui.head_pic_url headPicUrl,
+                sum( q.pass_times ) AS passTimes,
+                sum( q.pass_times * b.per_award ) money
+            FROM
+                game_break_user_qualify q
+                INNER JOIN `game_break_records` b ON b.game_no = q.game_no
+                INNER JOIN `user` u ON q.user_id = u.id
+                INNER JOIN `user_info` ui ON q.user_id = ui.user_id
+            WHERE
+                q.game_model_id = #{gameId,jdbcType=BIGINT}
+                AND q.create_time BETWEEN #{startTime,jdbcType=TIMESTAMP} AND #{endTime,jdbcType=TIMESTAMP}
+            GROUP BY
+                q.user_id,headPicUrl
+            ORDER BY
+                passTimes DESC,money DESC
+            ) a,( SELECT ( @rowNum := 0 ) ) b
+        ) r
+        WHERE
+            userId = #{userId,jdbcType=BIGINT}
+    </select>
+    <select id="getTotalPassNum" resultType="Integer">
+        SELECT
+            sum( pass_times ) passTimes
+        FROM
+            game_break_user_qualify
+        WHERE
+          game_model_id = #{gameId,jdbcType=BIGINT} AND game_no = #{gameNo,jdbcType=BIGINT}
+    </select>
+</mapper>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.artqiyi.dahuashai.game.mapper.GameFightRecordsMapper">
+  <resultMap id="BaseResultMap" type="com.artqiyi.dahuashai.game.domain.GameFightRecords">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="game_no" jdbcType="VARCHAR" property="gameNo" />
+    <result column="contest_num" jdbcType="INTEGER" property="contestNum" />
+    <result column="pk_times" jdbcType="INTEGER" property="pkTimes" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, game_no, contest_num, pk_times, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.artqiyi.dahuashai.game.domain.GameFightRecordsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from game_fight_records
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from game_fight_records
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from game_fight_records
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.artqiyi.dahuashai.game.domain.GameFightRecordsExample">
+    delete from game_fight_records
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.artqiyi.dahuashai.game.domain.GameFightRecords">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into game_fight_records (game_no, contest_num, pk_times, 
+      create_time)
+    values (#{gameNo,jdbcType=VARCHAR}, #{contestNum,jdbcType=INTEGER}, #{pkTimes,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.artqiyi.dahuashai.game.domain.GameFightRecords">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into game_fight_records
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gameNo != null">
+        game_no,
+      </if>
+      <if test="contestNum != null">
+        contest_num,
+      </if>
+      <if test="pkTimes != null">
+        pk_times,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gameNo != null">
+        #{gameNo,jdbcType=VARCHAR},
+      </if>
+      <if test="contestNum != null">
+        #{contestNum,jdbcType=INTEGER},
+      </if>
+      <if test="pkTimes != null">
+        #{pkTimes,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.artqiyi.dahuashai.game.domain.GameFightRecordsExample" resultType="java.lang.Long">
+    select count(*) from game_fight_records
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update game_fight_records
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.gameNo != null">
+        game_no = #{record.gameNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contestNum != null">
+        contest_num = #{record.contestNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.pkTimes != null">
+        pk_times = #{record.pkTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update game_fight_records
+    set id = #{record.id,jdbcType=BIGINT},
+      game_no = #{record.gameNo,jdbcType=VARCHAR},
+      contest_num = #{record.contestNum,jdbcType=INTEGER},
+      pk_times = #{record.pkTimes,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.artqiyi.dahuashai.game.domain.GameFightRecords">
+    update game_fight_records
+    <set>
+      <if test="gameNo != null">
+        game_no = #{gameNo,jdbcType=VARCHAR},
+      </if>
+      <if test="contestNum != null">
+        contest_num = #{contestNum,jdbcType=INTEGER},
+      </if>
+      <if test="pkTimes != null">
+        pk_times = #{pkTimes,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.artqiyi.dahuashai.game.domain.GameFightRecords">
+    update game_fight_records
+    set game_no = #{gameNo,jdbcType=VARCHAR},
+      contest_num = #{contestNum,jdbcType=INTEGER},
+      pk_times = #{pkTimes,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

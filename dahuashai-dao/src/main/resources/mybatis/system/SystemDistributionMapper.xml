@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.artqiyi.dahuashai.system.mapper.SystemDistributionMapper">
+  <resultMap id="BaseResultMap" type="com.artqiyi.dahuashai.system.domain.SystemDistribution">
+    <id column="distr_id" jdbcType="INTEGER" property="distrId" />
+    <result column="app_type" jdbcType="SMALLINT" property="appType" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="app_store_id" jdbcType="SMALLINT" property="appStoreId" />
+    <result column="distr_state" jdbcType="SMALLINT" property="distrState" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    distr_id, app_type, version, app_store_id, distr_state, create_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.artqiyi.dahuashai.system.domain.SystemDistributionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from system_distribution
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from system_distribution
+    where distr_id = #{distrId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from system_distribution
+    where distr_id = #{distrId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.artqiyi.dahuashai.system.domain.SystemDistributionExample">
+    delete from system_distribution
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.artqiyi.dahuashai.system.domain.SystemDistribution">
+    insert into system_distribution (distr_id, app_type, version, 
+      app_store_id, distr_state, create_time, 
+      update_time)
+    values (#{distrId,jdbcType=INTEGER}, #{appType,jdbcType=SMALLINT}, #{version,jdbcType=VARCHAR}, 
+      #{appStoreId,jdbcType=SMALLINT}, #{distrState,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.artqiyi.dahuashai.system.domain.SystemDistribution">
+    insert into system_distribution
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="distrId != null">
+        distr_id,
+      </if>
+      <if test="appType != null">
+        app_type,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="appStoreId != null">
+        app_store_id,
+      </if>
+      <if test="distrState != null">
+        distr_state,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="distrId != null">
+        #{distrId,jdbcType=INTEGER},
+      </if>
+      <if test="appType != null">
+        #{appType,jdbcType=SMALLINT},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="appStoreId != null">
+        #{appStoreId,jdbcType=SMALLINT},
+      </if>
+      <if test="distrState != null">
+        #{distrState,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.artqiyi.dahuashai.system.domain.SystemDistributionExample" resultType="java.lang.Long">
+    select count(*) from system_distribution
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update system_distribution
+    <set>
+      <if test="record.distrId != null">
+        distr_id = #{record.distrId,jdbcType=INTEGER},
+      </if>
+      <if test="record.appType != null">
+        app_type = #{record.appType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.version != null">
+        version = #{record.version,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appStoreId != null">
+        app_store_id = #{record.appStoreId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.distrState != null">
+        distr_state = #{record.distrState,jdbcType=SMALLINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update system_distribution
+    set distr_id = #{record.distrId,jdbcType=INTEGER},
+      app_type = #{record.appType,jdbcType=SMALLINT},
+      version = #{record.version,jdbcType=VARCHAR},
+      app_store_id = #{record.appStoreId,jdbcType=SMALLINT},
+      distr_state = #{record.distrState,jdbcType=SMALLINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.artqiyi.dahuashai.system.domain.SystemDistribution">
+    update system_distribution
+    <set>
+      <if test="appType != null">
+        app_type = #{appType,jdbcType=SMALLINT},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="appStoreId != null">
+        app_store_id = #{appStoreId,jdbcType=SMALLINT},
+      </if>
+      <if test="distrState != null">
+        distr_state = #{distrState,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where distr_id = #{distrId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.artqiyi.dahuashai.system.domain.SystemDistribution">
+    update system_distribution
+    set app_type = #{appType,jdbcType=SMALLINT},
+      version = #{version,jdbcType=VARCHAR},
+      app_store_id = #{appStoreId,jdbcType=SMALLINT},
+      distr_state = #{distrState,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where distr_id = #{distrId,jdbcType=INTEGER}
+  </update>
+</mapper>
